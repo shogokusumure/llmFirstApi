@@ -11,6 +11,8 @@ APIドキュメントは起動後に <http://127.0.0.1:8000/docs> で確認で�
 
 ## ドキュメントサイト
 
+公開ドキュメント: <https://shogokusumure.github.io/llmFirstApi/>
+
 GitHub Pages では API の OpenAPI 仕様と利用方法を公開します。API サーバー自体は公開せず、ローカルからのみ利用します。
 
 ```bash
@@ -23,9 +25,7 @@ uv run mkdocs serve
 
 ### GitHub Pages への公開
 
-1. GitHub にこのリポジトリと同じ名前の**非公開リポジトリ**を作成し、`main` ブランチを push します。
-2. リポジトリの **Settings → Pages → Build and deployment → Source** で **GitHub Actions** を選択します。
-3. `main` への push 後、Actions の `Docs` ワークフローが成功すると Pages に公開されます。サイトの URL はリポジトリの **Settings → Pages** で確認できます。
+このリポジトリでは GitHub Actions で Pages に自動公開します。`main` ブランチへの push 後、`Docs` ワークフローが成功するとサイトが更新されます。Pages の公開元はリポジトリの **Settings → Pages → Build and deployment → Source** で **GitHub Actions** に設定します。
 
 GitHub Pages の公開範囲は GitHub プランによって異なります。標準の Pages 公開ではサイトはインターネット上で閲覧可能です。公開するドキュメントに秘密情報や実データを含めないでください。Pages のビルドでは OpenAPI 仕様とドキュメントのみを公開し、API サーバーは起動しません。
 
