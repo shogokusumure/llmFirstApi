@@ -1,0 +1,16 @@
+site_name: AI Chat Test API
+site_description: ローカルで動作する AI Chat Test API の利用方法と API リファレンス
+
+theme:
+  name: material
+  language: ja
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+
+nav:
+  - 概要: index.md
+  - API リファレンス: api.md
+
+strict: true

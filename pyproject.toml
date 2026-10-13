@@ -1,0 +1,25 @@
+[project]
+name = "aichattest"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "shogokusumure", email = "20013868+shogokusumure@users.noreply.github.com" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi[standard]>=0.128.8",
+    "httpx>=0.28.1",
+]
+
+[dependency-groups]
+dev = [
+    "mkdocs-material>=9.6.0,<10",
+]
+
+[project.scripts]
+aichattest = "aichattest:main"
+
+[build-system]
+requires = ["uv_build>=0.12.19,<0.13.0"]
+build-backend = "uv_build"
