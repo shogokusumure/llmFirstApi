@@ -86,6 +86,16 @@ def list_conversations() -> list[dict]:
     ]
 
 
+def delete_conversation(conversation_id: str) -> bool:
+    with get_db_connection() as connection:
+        cursor = connection.execute(
+            "DELETE FROM conversations WHERE id = ?",
+            (conversation_id,),
+        )
+
+    return cursor.rowcount > 0
+
+
 def list_messages(conversation_id: str) -> list[dict]:
     with get_db_connection() as connection:
         conversation = connection.execute(

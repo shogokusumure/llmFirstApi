@@ -4,7 +4,14 @@ import httpx
 from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel, Field
 
-from .database import create_conversation, create_message, init_db, list_conversations, list_messages
+from .database import (
+    create_conversation,
+    create_message,
+    delete_conversation,
+    init_db,
+    list_conversations,
+    list_messages,
+)
 from .llm import OllamaResponseError, generate_assistant_reply
 
 app = FastAPI(title="AI Chat Test API")
@@ -60,6 +67,12 @@ def create_conversation_endpoint() -> ConversationOut:
 def list_conversations_endpoint() -> list[ConversationOut]:
     rows = list_conversations()
     return [ConversationOut(**row) for row in rows]
+
+
+@app.delete("/conversations/{conversation_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_conversation_endpoint(conversation_id: str) -> None:
+    if not delete_conversation(conversation_id):
+        raise HTTPException(status_code=404, detail="Conversation not found")
 
 
 @app.get("/conversations/{conversation_id}/messages")

@@ -60,6 +60,7 @@ cp data/chat.db data/chat.db.bak
 
 - `POST /conversations`: 会話を作成
 - `GET /conversations`: 会話一覧を取得
+- `DELETE /conversations/{conversation_id}`: 会話とその発言を削除
 - `POST /conversations/{conversation_id}/messages`: `user` または `assistant` の発言を保存
 - `GET /conversations/{conversation_id}/messages`: 会話の発言を取得
 - `POST /conversations/{conversation_id}/chat`: ユーザー発言を保存し、会話履歴をOllamaに渡して、返答を保存して返す

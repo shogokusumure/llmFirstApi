@@ -89,6 +89,38 @@ class ChatEndpointTests(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         post.assert_not_called()
 
+    def test_delete_conversation_removes_conversation_and_messages(self) -> None:
+        message_response = self.client.post(
+            f"/conversations/{self.conversation_id}/messages",
+            json={"role": "user", "content": "削除対象"},
+        )
+        self.assertEqual(message_response.status_code, 201)
+
+        response = self.client.delete(f"/conversations/{self.conversation_id}")
+
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.content, b"")
+        self.assertNotIn(
+            self.conversation_id,
+            [conversation["id"] for conversation in self.client.get("/conversations").json()],
+        )
+        with database.get_db_connection() as connection:
+            message_count = connection.execute(
+                "SELECT COUNT(*) FROM messages WHERE conversation_id = ?",
+                (self.conversation_id,),
+            ).fetchone()[0]
+        self.assertEqual(message_count, 0)
+        self.assertEqual(
+            self.client.get(f"/conversations/{self.conversation_id}/messages").status_code,
+            404,
+        )
+
+    def test_delete_missing_conversation_returns_not_found(self) -> None:
+        response = self.client.delete("/conversations/missing")
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json()["detail"], "Conversation not found")
+
 
 if __name__ == "__main__":
     unittest.main()
